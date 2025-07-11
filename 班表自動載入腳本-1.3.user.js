@@ -645,6 +645,115 @@
         }
     });
 
+    let originalStates = [];
+
+    // 禁用 actionButtonContainer 和 dateControlContainer 內的物件
+    function disableControlsDuringProcessing() {
+        originalStates = [
+            {
+                element: inputDayButton,
+                disabled: inputDayButton.disabled,
+                opacity: inputDayButton.style.opacity,
+                cursor: inputDayButton.style.cursor
+            },
+            {
+                element: clearDayButton,
+                disabled: clearDayButton.disabled,
+                opacity: clearDayButton.style.opacity,
+                cursor: clearDayButton.style.cursor
+            },
+            {
+                element: prevDayButton,
+                disabled: prevDayButton.disabled,
+                opacity: prevDayButton.style.opacity,
+                cursor: prevDayButton.style.cursor
+            },
+            {
+                element: nextDayButton,
+                disabled: nextDayButton.disabled,
+                opacity: nextDayButton.style.opacity,
+                cursor: nextDayButton.style.cursor
+            },
+            {
+                element: dateSelect,
+                disabled: dateSelect.disabled,
+                opacity: dateSelect.style.opacity,
+                cursor: dateSelect.style.cursor
+            },
+            {
+                element: fileButton,
+                disabled: fileButton.disabled,
+                opacity: fileButton.style.opacity,
+                cursor: fileButton.style.cursor
+            }
+        ];
+
+        // 禁用 actionButtonContainer 內的按鈕
+        inputDayButton.disabled = true;
+        inputDayButton.style.opacity = '0.5';
+        inputDayButton.style.cursor = 'not-allowed';
+
+        clearDayButton.disabled = true;
+        clearDayButton.style.opacity = '0.5';
+        clearDayButton.style.cursor = 'not-allowed';
+
+        // 禁用 dateControlContainer 內的物件
+        prevDayButton.disabled = true;
+        prevDayButton.style.opacity = '0.5';
+        prevDayButton.style.cursor = 'not-allowed';
+
+        nextDayButton.disabled = true;
+        nextDayButton.style.opacity = '0.5';
+        nextDayButton.style.cursor = 'not-allowed';
+
+        dateSelect.disabled = true;
+        dateSelect.style.opacity = '0.5';
+        dateSelect.style.cursor = 'not-allowed';
+
+        // 加入對 fileContainer 內容的禁用（主要是 fileButton）
+        fileButton.disabled = true;
+        fileButton.style.opacity = '0.5';
+        fileButton.style.cursor = 'not-allowed';
+    }
+
+    // 啟用 actionButtonContainer 和 dateControlContainer 內的物件
+    function enableControlsAfterProcessing() {
+        /*// 啟用 actionButtonContainer 內的按鈕
+        inputDayButton.disabled = false;
+        inputDayButton.style.opacity = '1';
+        inputDayButton.style.cursor = 'pointer';
+
+        clearDayButton.disabled = false;
+        clearDayButton.style.opacity = '1';
+        clearDayButton.style.cursor = 'pointer';
+
+        // 啟用 dateControlContainer 內的物件
+        prevDayButton.disabled = false;
+        prevDayButton.style.opacity = '1';
+        prevDayButton.style.cursor = 'pointer';
+
+        nextDayButton.disabled = false;
+        nextDayButton.style.opacity = '1';
+        nextDayButton.style.cursor = 'pointer';
+
+        dateSelect.disabled = false;
+        dateSelect.style.opacity = '1';
+        dateSelect.style.cursor = 'pointer';
+
+        // 加入對 fileContainer 內容的啟用（主要是 fileButton）
+        fileButton.disabled = false;
+        fileButton.style.opacity = '1';
+        fileButton.style.cursor = 'pointer';*/
+
+        originalStates.forEach(state => {
+            const { element, disabled, opacity, cursor } = state;
+            element.disabled = disabled;
+            element.style.opacity = opacity || ''; // 若原無值，設為空恢復預設
+            element.style.cursor = cursor || ''; // 若原無值，設為空恢復預設
+        });
+        originalStates = []; // 清空暫存，避免重複使用舊狀態
+    }
+
     // 輸入當日班表按鈕點擊事件
     inputDayButton.addEventListener('click', () => {
         if (!inputDayButton.disabled) {
@@ -652,66 +761,6 @@
             if (!selectedDate || !Object.keys(Ximen).some(name => Ximen[name][selectedDate])) {
                 alert(`日期 ${selectedDate} 無有效班表資料`);
                 return;
-            }
-
-            // 禁用 actionButtonContainer 和 dateControlContainer 內的物件
-            function disableControlsDuringProcessing() {
-                // 禁用 actionButtonContainer 內的按鈕
-                inputDayButton.disabled = true;
-                inputDayButton.style.opacity = '0.5';
-                inputDayButton.style.cursor = 'not-allowed';
-
-                clearDayButton.disabled = true;
-                clearDayButton.style.opacity = '0.5';
-                clearDayButton.style.cursor = 'not-allowed';
-
-                // 禁用 dateControlContainer 內的物件
-                prevDayButton.disabled = true;
-                prevDayButton.style.opacity = '0.5';
-                prevDayButton.style.cursor = 'not-allowed';
-
-                nextDayButton.disabled = true;
-                nextDayButton.style.opacity = '0.5';
-                nextDayButton.style.cursor = 'not-allowed';
-
-                dateSelect.disabled = true;
-                dateSelect.style.opacity = '0.5';
-                dateSelect.style.cursor = 'not-allowed';
-
-                // 加入對 fileContainer 內容的禁用（主要是 fileButton）
-                fileButton.disabled = true;
-                fileButton.style.opacity = '0.5';
-                fileButton.style.cursor = 'not-allowed';
-            }
-
-            // 啟用 actionButtonContainer 和 dateControlContainer 內的物件
-            function enableControlsAfterProcessing() {
-                // 啟用 actionButtonContainer 內的按鈕
-                inputDayButton.disabled = false;
-                inputDayButton.style.opacity = '1';
-                inputDayButton.style.cursor = 'pointer';
-
-                clearDayButton.disabled = false;
-                clearDayButton.style.opacity = '1';
-                clearDayButton.style.cursor = 'pointer';
-
-                // 啟用 dateControlContainer 內的物件
-                prevDayButton.disabled = false;
-                prevDayButton.style.opacity = '1';
-                prevDayButton.style.cursor = 'pointer';
-
-                nextDayButton.disabled = false;
-                nextDayButton.style.opacity = '1';
-                nextDayButton.style.cursor = 'pointer';
-
-                dateSelect.disabled = false;
-                dateSelect.style.opacity = '1';
-                dateSelect.style.cursor = 'pointer';
-
-                // 加入對 fileContainer 內容的啟用（主要是 fileButton）
-                fileButton.disabled = false;
-                fileButton.style.opacity = '1';
-                fileButton.style.cursor = 'pointer';
             }
 
             disableControlsDuringProcessing(); // 開始處理前禁用
@@ -892,13 +941,24 @@
             if (removeButtons.length === 0) {
                 alert('無可清空的班表按鈕');
             } else {
-                removeButtons.forEach(btn => btn.click());
+                const buttonsArray = Array.from(removeButtons).reverse(); // 反轉按鈕順序，從最下面開始
+                disableControlsDuringProcessing();
+                buttonsArray.forEach((btn, index) => {
+                    setTimeout(() => {
+                        btn.click(); // 逐一點擊
+                        // 當所有按鈕點擊完成後，清空 maids[0]
+                        if (index === buttonsArray.length - 1) {
+                            setTimeout(() => {
+                                $('select[name="maids[0][store]"]').val(null).trigger('change');
+                                $('select[name="maids[0][maid]"]').val(null).trigger('change');
+                                $('input[name="maids[0][start_time]"]').val("");
+                                $('input[name="maids[0][end_time]"]').val("");
+                                enableControlsAfterProcessing();
+                            }, 300); // 最後點擊後等待 300ms 再清空
+                        }
+                    }, index * 300); // 每個按鈕間隔 300ms
+                });
             }
-            // 清空 maids[0][store] 下拉選單
-            $('select[name="maids[0][store]"]').val(null).trigger('change');
-            $('select[name="maids[0][maid]"]').val(null).trigger('change');
-            $('input[name="maids[0][start_time]"]').val("");
-            $('input[name="maids[0][end_time]"]').val("");
         } else {
             alert('jQuery 未載入，無法清空下拉選單');
         }

@@ -86,7 +86,7 @@
     title.style.fontSize = '16px';
 
     const version = document.createElement('span');
-    version.textContent = 'v1.3';
+    version.textContent = 'v1.4';
     version.style.fontSize = '12px';
     version.style.color = '#666';
 
@@ -427,6 +427,31 @@
     };
     floatingWindow.appendChild(byText);
 
+    // 添加 by星辰王 文字
+    const gitText = document.createElement('div');
+    gitText.textContent = 'GitHub';
+    gitText.style.position = 'absolute';
+    gitText.style.bottom = '2px';
+    gitText.style.right = '5px';
+    gitText.style.fontSize = '10px';
+    gitText.style.color = '#666';
+    gitText.style.cursor = 'pointer'; // 顯示手型游標
+    gitText.style.transition = 'color 0.3s, text-shadow 0.3s'; // 添加過渡效果
+    gitText.onmouseover = function() {
+        gitText.style.color = '#000';
+        gitText.style.textShadow = '0 0 5px rgba(0, 0, 0, 0.3)';
+    };
+    gitText.onmouseout = function() {
+        gitText.style.color = '#666';
+        gitText.style.textShadow = 'none';
+    };
+    gitText.onclick = function() {
+        window.open('https://github.com/karta0655127/KirabaseScheduleUploadTool', '_blank'); // 點擊後打開指定網站
+    };
+
+    floatingWindow.appendChild(byText);
+    floatingWindow.appendChild(gitText);
+
     // 將元素添加到視窗
     floatingWindow.appendChild(titleContainer);
     floatingWindow.appendChild(toggleContainer);
@@ -456,6 +481,7 @@
     actionButtonContainer.style.display = 'none';
     resultDisplay.style.display = 'none';
     byText.style.display = 'none';
+    gitText.style.display = 'none';
 
     const containers = [
         toggleContainer,
@@ -464,7 +490,8 @@
         dateControlContainer,
         storeControlContainer,
         actionButtonContainer,
-        byText
+        byText,
+        gitText
     ];
 
     containers.forEach(container => {
@@ -532,12 +559,13 @@
                 fileNameDisplay,
                 dateControlContainer,
                 actionButtonContainer,
-                byText
+                byText,
+                gitText
             ];
 
             containers.forEach((container, index) => {
                 setTimeout(() => {
-                    container.style.display = (container === fileNameDisplay || container === byText)
+                    container.style.display = (container === fileNameDisplay || container === byText || container === gitText)
                         ? 'block' : 'flex';
                     requestAnimationFrame(() => {
                         container.style.opacity = '1';
@@ -590,7 +618,8 @@
             fileNameDisplay,
             dateControlContainer,
             actionButtonContainer,
-            byText
+            byText,
+            gitText
         ];
 
         containers.reverse().forEach((container, index) => {

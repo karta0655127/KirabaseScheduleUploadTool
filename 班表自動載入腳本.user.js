@@ -819,7 +819,7 @@
                     let maxIndex = 0;
                     let currentIndex = 0;
                     let consecutiveInvalid = 0;
-                    let foundMax = 0; // 記錄找到的最大有效索引
+                    let foundMax = -1; // 記錄找到的最大有效索引
 
                     while (consecutiveInvalid < 10) { // 直到連續 10 個無效才停止
                         const $storeSelect = $(`select[name="maids[${currentIndex}][store]"]`);
@@ -868,7 +868,7 @@
                     }
                 }
 
-                if (getMaxMaidIndex() == 0){
+                if (getMaxMaidIndex() == -1){
                     setTimeout(() => {
                         // 第一個操作：等待後執行 $('#add-table-shift').click();
                         $('#add-table-shift').click(); // 新增新的 maids[X] 元素

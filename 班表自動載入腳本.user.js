@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         班表自動載入腳本
 // @namespace    https://www.instagram.com/yuxuan_0122_/
-// @version      1.6
+// @version      1.7
 // @description  在右側新增滑鼠懸浮下拉視窗，含可切換是否自動隱藏的滑動開關，動畫轉換場景更加流暢，匹配其他店家的星辰，以及適當的禁用元件避免誤操作
 // @match        *://prod-kb-gm.kb.marscatgames.com.tw/*
 // @grant        none
@@ -116,7 +116,7 @@
     title.style.fontSize = '16px';
 
     const version = document.createElement('span');
-    version.textContent = 'v1.6';
+    version.textContent = 'v1.7';
     version.style.fontSize = '12px';
     version.style.color = '#666';
 
@@ -868,7 +868,16 @@
                     }
                 }
 
-                if (getMaxMaidIndex() !== 0) {
+                if (getMaxMaidIndex() == 0){
+                    setTimeout(() => {
+                        // 第一個操作：等待後執行 $('#add-table-shift').click();
+                        $('#add-table-shift').click(); // 新增新的 maids[X] 元素
+                        setTimeout(() => {
+                            currentIndex = getMaxMaidIndex(); // 更新為最大有效索引
+                            processNextName(); // 處理下一個員工
+                        }, WAIT_DURATION);
+                    }, WAIT_DURATION);
+                } else if (getMaxMaidIndex() !== 0) {
                     setTimeout(() => {
                         // 第一個操作：等待後執行 $('#add-table-shift').click();
                         $('#add-table-shift').click(); // 新增新的 maids[X] 元素

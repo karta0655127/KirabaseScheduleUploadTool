@@ -4,7 +4,7 @@
 // @version      1.8
 // @description  在右側新增滑鼠懸浮下拉視窗，含可切換是否自動隱藏的滑動開關，動畫轉換場景更加流暢，匹配其他店家的星辰，以及適當的禁用元件避免誤操作
 // @match        *://prod-kb-gm.kb.marscatgames.com.tw/*
-// @grant        GM_info
+// @grant        none
 // @exclude      *://grok.com/*
 // @exclude      *://chatgpt.com/*
 // ==/UserScript==

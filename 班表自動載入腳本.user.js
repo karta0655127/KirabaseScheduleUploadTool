@@ -21,7 +21,7 @@
     let Ximen = {};
     let ShiftTimes = {};
 
-// 動態載入 jQuery（若頁面未包含）
+    // 動態載入 jQuery（若頁面未包含）
     let jQueryLoaded = !!window.jQuery;
     if (!jQueryLoaded) {
         const script = document.createElement('script');
@@ -116,7 +116,7 @@
     title.style.fontSize = '16px';
 
     const version = document.createElement('span');
-    version.textContent = 'v' + GM_info.script.version;
+    version.textContent = 'v1.8';
     version.style.fontSize = '12px';
     version.style.color = '#666';
 
